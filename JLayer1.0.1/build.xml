@@ -1,0 +1,58 @@
+<project name="javalayer" default="usage" basedir="">
+
+  <!-- Initializations -->
+  <target name="init">    
+    <echo message="-------------------------------------------------------------"/>  
+    <echo message="------------         BUILDING JLAYER PACKAGE       ----------"/>
+    <echo message=""/>
+    <property name="year" value="1999-2008"/>
+    <property name="jars" value="/jar/JLayer1.0.1"/>
+    <property name="sources" value="/jar/JLayer1.0.1/src"/>
+    <property name="classes" value="/jar/JLayer1.0.1/classes"/>
+    <property name="api" value="/jar/JLayer1.0.1/doc"/>
+  </target>
+
+  <!-- Build -->
+  <target name="build" depends="init">
+    <echo message="------ Compiling application"/>
+    <javac srcdir="${sources}" destdir="classes" includes="**"/>
+    <copy todir="classes">
+       <fileset dir="src" >
+           <include name="javazoom/jl/decoder/*.ser"/>
+       </fileset>
+     </copy>
+  </target>
+
+  <!-- Archive -->
+  <target name="dist" depends="build">
+    <echo message="------ Building Jar file"/>
+    <jar jarfile="jl1.0.1.jar" basedir="classes" />
+  </target>
+
+  <!-- JavaDoc -->
+  <target name="all" depends="dist">
+     <echo message="------ Running JavaDoc"/>
+     <javadoc packagenames="javazoom.*"
+              sourcepath="${sources}"
+              destdir="doc"
+              bottom="JavaZOOM ${year}"
+              author="false">
+      <classpath>
+        <pathelement location="classes"/>
+      </classpath>
+     </javadoc>
+  </target>
+
+  <!-- Usage -->
+  <target name="usage">
+     <echo message="*** JavaLayer ANT build script ***"/>
+     <echo message="Usage : "/>
+     <echo message="   ant [target]"/>
+     <echo message=""/>     
+     <echo message="   target : "/>     
+     <echo message="            build : Build Application"/>     
+     <echo message="            dist  : Build Application + Archive (JAR)"/>     
+     <echo message="            all   : Build Application + Archive + JavaDoc"/>       
+  </target>
+       
+</project>
