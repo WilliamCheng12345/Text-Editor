@@ -10,13 +10,11 @@ public class TextEditor {
         textArea = EditorTextArea.createTextArea();
 
         createFrame();
+        createContentPane();
 
         frame.setVisible(true);
 
         while(frame.isVisible()) {
-            String font = FontSelector.getFont();
-
-            textArea.setFont(new Font(font, Font.PLAIN, 12));
             metadataOfTextArea.setText(countWords() + " words");
         }
     }
@@ -34,7 +32,9 @@ public class TextEditor {
     private static void createContentPane() {
         JScrollPane scrollPane =  new JScrollPane(textArea);
         Container contentPane = frame.getContentPane();
+
         contentPane.add(scrollPane, BorderLayout.CENTER);
+        createMetadataOfTextArea();
         contentPane.add(metadataOfTextArea, BorderLayout.PAGE_END);
     }
 
