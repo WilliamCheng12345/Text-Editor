@@ -3,21 +3,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 
-class OperateFileMenu implements ActionListener {
-    private static JMenu operateFileMenu;
+class FileMenu implements ActionListener {
+    private static JMenu fileMenu;
     private static JTextArea textArea;
 
-    private OperateFileMenu(JTextArea textArea) {
-        operateFileMenu = new JMenu("File");
-        OperateFileMenu.textArea = textArea;
+    private FileMenu() {
+        fileMenu = new JMenu("File");
+        textArea = TextEditor.textArea;
 
         JMenuItem open = new JMenuItem("Open");
         JMenuItem save = new JMenuItem("Save");
         JMenuItem newFile = new JMenuItem("New");
 
-        operateFileMenu.add(open);
-        operateFileMenu.add(save);
-        operateFileMenu.add(newFile);
+        fileMenu.add(open);
+        fileMenu.add(save);
+        fileMenu.add(newFile);
 
         open.addActionListener(this);
         save.addActionListener(this);
@@ -43,25 +43,24 @@ class OperateFileMenu implements ActionListener {
 
     private static void openFile() {
         JFileChooser fileChooser = new JFileChooser();
-        int stateOfFileChooserDialog = fileChooser.showOpenDialog(null);
+        int stateOfDialog = fileChooser.showOpenDialog(null);
 
-        if(stateOfFileChooserDialog == JFileChooser.APPROVE_OPTION) {
+        if(stateOfDialog == JFileChooser.APPROVE_OPTION) {
             File currentFile = fileChooser.getSelectedFile();
 
             try {
-                FileReader fileReader = new FileReader(currentFile);
-                BufferedReader bufferedReader = new BufferedReader(fileReader);
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(currentFile));
                 String currentLine = bufferedReader.readLine();
                 String text = "";
 
                 while(currentLine != null) {
-                    text = text + currentLine + "\n";
+                    text += currentLine + "\n";
                     currentLine = bufferedReader.readLine();
                 }
 
                 textArea.setText(text);
             } catch(Exception error) {
-                JOptionPane.showMessageDialog(null, error.getMessage());
+                JOptionPane.showMessageDialog(null, "Cannot open file");
             }
         }
     }
@@ -74,21 +73,21 @@ class OperateFileMenu implements ActionListener {
             File currentFile = fileChooser.getSelectedFile();
 
             try {
-                FileWriter fileWriter = new FileWriter(currentFile, false);
-                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(currentFile));
+
                 bufferedWriter.write(textArea.getText());
                 bufferedWriter.close();
             } catch (Exception error) {
-                JOptionPane.showMessageDialog(null, error.getMessage());
+                JOptionPane.showMessageDialog(null, "Cannot save file");
             }
         }
     }
 
-    static JMenu createOperateFileMenu(JTextArea textArea) {
-        if(operateFileMenu == null) {
-            new OperateFileMenu(textArea);
+    static JMenu createFileMenu() {
+        if(fileMenu == null) {
+            new FileMenu();
         }
 
-        return operateFileMenu;
+        return fileMenu;
     }
 }

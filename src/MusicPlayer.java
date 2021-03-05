@@ -17,7 +17,7 @@ class MusicPlayer  {
             musicPlayer = new Player(currentFileInputStream);
         }
         catch(Exception error) {
-            JOptionPane.showMessageDialog(null, error.getMessage());
+            JOptionPane.showMessageDialog(null, "Cannot open file");
         }
     }
 
@@ -39,6 +39,7 @@ class MusicPlayer  {
         }
     }
 
+    // Use of guard block.
     private static void play() {
         while(playerStatus != FINISHED) {
             try {
@@ -46,10 +47,9 @@ class MusicPlayer  {
                     break;
                 }
             } catch (Exception error) {
-                JOptionPane.showMessageDialog(null, error.getMessage());
+                JOptionPane.showMessageDialog(null, "Cannot continue playing file");
                 break;
             }
-
             synchronized (playerLock) {
                 while (playerStatus == PAUSED) {
                     try {
@@ -59,19 +59,21 @@ class MusicPlayer  {
                         break;
                     }
                 }
+
             }
         }
-
         close();
     }
 
     static void resume() {
         synchronized (playerLock) {
             if (playerStatus == PAUSED) {
-                playerStatus = PLAYING;
+
                 playerLock.notifyAll();
             }
         }
+
+        playerStatus = PLAYING;
     }
 
     static void pause() {
@@ -87,7 +89,7 @@ class MusicPlayer  {
             musicPlayer.close();
         }
         catch(Exception error) {
-            JOptionPane.showMessageDialog(null, error.getMessage());
+            JOptionPane.showMessageDialog(null, "Cannot close file");
         }
     }
 

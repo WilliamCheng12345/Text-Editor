@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
@@ -55,8 +57,7 @@ public class MusicMenu implements ActionListener {
             File file = fileChooser.getSelectedFile();
 
             try {
-                FileInputStream fileInputStream = new FileInputStream(file);
-                BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+                BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(file));
 
                 new MusicPlayer(bufferedInputStream);
                 MusicPlayer.start();

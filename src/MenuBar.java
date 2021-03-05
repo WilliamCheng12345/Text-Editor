@@ -1,13 +1,13 @@
 import javax.swing.*;
 
-class EditorMenuBar {
-    private static  JMenuBar menuBar;
+class MenuBar {
+    private static JMenuBar menuBar;
 
-    private EditorMenuBar(JTextArea textArea) {
+    private MenuBar() {
         menuBar = new JMenuBar();
 
-        JMenu editTextMenu = EditTextMenu.createEditTextMenu();
-        JMenu operateFileMenu = OperateFileMenu.createOperateFileMenu(textArea);
+        JMenu editTextMenu = EditMenu.createEditMenu();
+        JMenu operateFileMenu = FileMenu.createFileMenu();
         JMenu musicMenu = MusicMenu.createMusicMenu();
 
         menuBar.add(editTextMenu);
@@ -17,7 +17,7 @@ class EditorMenuBar {
 
      static JMenuBar createMenuBar(JTextArea textArea) {
         if(menuBar == null) {
-            new EditorMenuBar(textArea);
+            new MenuBar();
         }
 
         return menuBar;
