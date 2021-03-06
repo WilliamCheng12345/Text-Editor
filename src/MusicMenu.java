@@ -1,6 +1,4 @@
 import javax.swing.*;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
@@ -53,7 +51,7 @@ public class MusicMenu implements ActionListener {
         JFileChooser fileChooser = new JFileChooser();
         int stateOfFileChooserDialog = fileChooser.showOpenDialog(null);
 
-        if(stateOfFileChooserDialog == JFileChooser.APPROVE_OPTION) {
+        if (stateOfFileChooserDialog == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
 
             try {
@@ -61,15 +59,14 @@ public class MusicMenu implements ActionListener {
 
                 new MusicPlayer(bufferedInputStream);
                 MusicPlayer.start();
-            }
-            catch (Exception error) {
+            } catch (Exception error) {
                 JOptionPane.showMessageDialog(null, error.getMessage());
             }
         }
     }
 
     static JMenu createMusicMenu() {
-        if(musicMenu == null) {
+        if (musicMenu == null) {
             new MusicMenu();
         }
 

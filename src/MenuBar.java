@@ -15,8 +15,8 @@ class MenuBar {
         menuBar.add(musicMenu);
     }
 
-     static JMenuBar createMenuBar(JTextArea textArea) {
-        if(menuBar == null) {
+    static JMenuBar createMenuBar(JTextArea textArea) {
+        if (menuBar == null) {
             new MenuBar();
         }
 

@@ -9,7 +9,7 @@ class FileMenu implements ActionListener {
 
     private FileMenu() {
         fileMenu = new JMenu("File");
-        textArea = TextEditor.textArea;
+        textArea = TextEditor.getTextArea();
 
         JMenuItem open = new JMenuItem("Open");
         JMenuItem save = new JMenuItem("Save");
@@ -45,7 +45,7 @@ class FileMenu implements ActionListener {
         JFileChooser fileChooser = new JFileChooser();
         int stateOfDialog = fileChooser.showOpenDialog(null);
 
-        if(stateOfDialog == JFileChooser.APPROVE_OPTION) {
+        if (stateOfDialog == JFileChooser.APPROVE_OPTION) {
             File currentFile = fileChooser.getSelectedFile();
 
             try {
@@ -53,13 +53,13 @@ class FileMenu implements ActionListener {
                 String currentLine = bufferedReader.readLine();
                 String text = "";
 
-                while(currentLine != null) {
+                while (currentLine != null) {
                     text += currentLine + "\n";
                     currentLine = bufferedReader.readLine();
                 }
 
                 textArea.setText(text);
-            } catch(Exception error) {
+            } catch (Exception error) {
                 JOptionPane.showMessageDialog(null, "Cannot open file");
             }
         }
@@ -69,7 +69,7 @@ class FileMenu implements ActionListener {
         JFileChooser fileChooser = new JFileChooser();
         int stateOfFileChooserDialog = fileChooser.showSaveDialog(null);
 
-        if(stateOfFileChooserDialog == JFileChooser.APPROVE_OPTION) {
+        if (stateOfFileChooserDialog == JFileChooser.APPROVE_OPTION) {
             File currentFile = fileChooser.getSelectedFile();
 
             try {
@@ -84,7 +84,7 @@ class FileMenu implements ActionListener {
     }
 
     static JMenu createFileMenu() {
-        if(fileMenu == null) {
+        if (fileMenu == null) {
             new FileMenu();
         }
 

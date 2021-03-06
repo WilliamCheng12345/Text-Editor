@@ -15,7 +15,7 @@ class EditMenu implements ActionListener {
     private EditMenu() {
         editMenu = new JMenu("Edit");
         manager = new UndoManager();
-        textArea = TextEditor.textArea;
+        textArea = TextEditor.getTextArea();
 
         addCopyMenuItem();
         addCutMenuItem();
@@ -56,6 +56,7 @@ class EditMenu implements ActionListener {
         JMenuItem selectAll = new JMenuItem("Select All");
 
         selectAll.setMnemonic(KeyEvent.VK_A);
+        selectAll.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.ALT_MASK));
         selectAll.addActionListener(this);
         editMenu.add(selectAll);
     }
@@ -63,7 +64,8 @@ class EditMenu implements ActionListener {
     private void addUndoMenuItem() {
         JMenuItem undo = new JMenuItem("Undo");
 
-        undo.setMnemonic(KeyEvent.VK_U);
+        undo.setMnemonic(KeyEvent.VK_Z);
+        undo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, ActionEvent.ALT_MASK));
         undo.addActionListener(this);
         textArea.getDocument().addUndoableEditListener(
                 new UndoableEditListener() {
@@ -80,6 +82,7 @@ class EditMenu implements ActionListener {
         JMenuItem redo = new JMenuItem("Redo");
 
         redo.setMnemonic(KeyEvent.VK_R);
+        redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.ALT_MASK));
         redo.addActionListener(this);
         editMenu.add(redo);
     }
@@ -90,21 +93,23 @@ class EditMenu implements ActionListener {
 
         switch (command) {
             case "Select All":
-                TextEditor.textArea.selectAll();
+                textArea.selectAll();
                 break;
             case "Undo":
-                manager.undo();
+                if(manager.canUndo()) {
+                    manager.undo();
+                }
                 break;
             case "Redo":
-                manager.redo();
+                if(manager.canRedo()) {
+                    manager.redo();
+                }
                 break;
         }
-
-
     }
 
     static JMenu createEditMenu() {
-        if(editMenu == null) {
+        if (editMenu == null) {
             new EditMenu();
         }
 

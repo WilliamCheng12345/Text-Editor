@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class TextEditor {
-    static JTextArea textArea;
+    private static JTextArea textArea;
     private static JFrame frame;
     private static JTextField metadataOfTextArea;
 
@@ -14,7 +14,7 @@ public class TextEditor {
 
         frame.setVisible(true);
 
-        while(frame.isVisible()) {
+        while (frame.isVisible()) {
             metadataOfTextArea.setText(countWords() + " words");
         }
     }
@@ -30,7 +30,7 @@ public class TextEditor {
     }
 
     private static void createContentPane() {
-        JScrollPane scrollPane =  new JScrollPane(textArea);
+        JScrollPane scrollPane = new JScrollPane(textArea);
         Container contentPane = frame.getContentPane();
 
         contentPane.add(scrollPane, BorderLayout.CENTER);
@@ -49,12 +49,16 @@ public class TextEditor {
         int numberOfWords = 0;
 
         // Need to check if length is 0 because String split will count an empty
-        if(textArea.getText().length() != 0) {
+        if (textArea.getText().length() != 0) {
             String[] wordsSplitByWhiteSpace = textArea.getText().split("\\s+");
             numberOfWords += wordsSplitByWhiteSpace.length;
         }
 
         return numberOfWords;
+    }
+
+    static JTextArea getTextArea() {
+        return textArea;
     }
 
     public static void main(String[] args) {
